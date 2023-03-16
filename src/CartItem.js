@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlobalContext } from './context';
 
 const CartItem = ({ id, img, title, price, amount }) => {
-  const { removeItem, increase, decrease } = useGlobalContext();
+  const { removeItem, increase, decrease, toggleAmount } = useGlobalContext();
 
   return (
     <article className='cart-item'>
@@ -27,7 +27,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
         {/* increase amount */}
         <button
           className='amount-btn'
-          onClick={() => increase(id)}
+          onClick={() => toggleAmount(id, 'inc')}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -41,7 +41,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
         {/* decrease amount */}
         <button
           className='amount-btn'
-          onClick={() => decrease(id)}
+          onClick={() => toggleAmount(id, 'dec')}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'

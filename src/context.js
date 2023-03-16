@@ -27,7 +27,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: 'REMOVE_ITEM', payload: id });
   };
 
-  // increase item in the cart
+  // increase and decrease  items in the cart
   const increase = (id) => {
     dispatch({ type: 'INCREASE', payload: id });
   };
@@ -35,6 +35,24 @@ const AppProvider = ({ children }) => {
     dispatch({ type: 'DECREASE', payload: id });
   };
 
+  // fetch data from an Api
+  const fetchData = async () => {
+    dispatch({ type: 'LOADING' });
+    const response = await fetch(url);
+    const cart = await response.json();
+    // console.log(cart);
+    dispatch({ type: 'DISPLAY_ITEMS', payload: cart });
+  };
+
+  const toggleAmount = (id, type) => {
+    dispatch({ type: 'TOGGLE_AMOUNT', payload: { id, type } });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // get number of items and total price
   useEffect(() => {
     dispatch({ type: 'GET_TOTALS' });
   }, [state.cart]);
@@ -47,6 +65,7 @@ const AppProvider = ({ children }) => {
         removeItem,
         increase,
         decrease,
+        toggleAmount,
       }}
     >
       {children}
